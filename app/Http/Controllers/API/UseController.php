@@ -9,7 +9,7 @@ use Auth;
 
 class UseController extends Controller
 {
-    // function to add user 
+    // function to add user... 
     public function addUser(Request $request){
         // Validation
         $Valid = Validator::make($request->all(),[
@@ -42,7 +42,7 @@ class UseController extends Controller
     }
 
 
-    // function to get All user 
+    // function to get All user... 
     public function allUser(){
         
         $users = User::all();
@@ -53,7 +53,7 @@ class UseController extends Controller
     }
 
 
-    // function to get Indivisual user
+    // function to get Indivisual user...
     public function indivisualUser($id){
         
         $users = User::find($id);
@@ -66,7 +66,7 @@ class UseController extends Controller
         return response()->json($result, $responseCode);
     }
 
-    // function to update user 
+    // function to update user... 
     public function updateUser(Request $request ,$id){
         $users = User::find($id);
         if(!$users){
@@ -92,7 +92,7 @@ class UseController extends Controller
         return response()->json($result, 200);
     }
 
-    // function to delete user
+    // function to delete user...
     public function deleteUser(Request $request ,$id){
         $users = User::find($id);
         if(!$users){
@@ -103,7 +103,7 @@ class UseController extends Controller
         return response()->json($result, 200);
     }
 
-    // For Login 
+    // Function For Login ... 
     public function userLogin(Request $request){
         $Valid = Validator::make($request->all(),[
             'email' => 'required',
@@ -118,19 +118,18 @@ class UseController extends Controller
         $credential = $request->only('email', 'password');
         if(Auth::attempt($credential)){
             $user = Auth::user();
-            
             $token = $user->createToken('MyToken')->accessToken;
             return response()->json(['status'=> true, 'message'=> 'login Successfully Done', 'token' =>$token], 200);
         }
         return response()->json(['status'=> false, 'message'=> 'Invalid login credential'], 401);
     }
 
-    // Unauthorized 
+    // Function Unauthorized user ...
     public function unauthentic(){
         return response()->json(['status'=> false, 'message'=> 'Only can access Authentic Users', 'error'=> 'Unauthentic'], 401);
     }
 
-    // For logout ...
+    // Function For logout ...
     public function logout(){
         $user =Auth::user();
         $user->$tokens->each(function ($token, $key){
